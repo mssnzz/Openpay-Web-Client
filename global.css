@@ -1,0 +1,21 @@
+/* Estilos globales en tu archivo CSS */
+@font-face {
+    font-family: "Uber-Regular";
+    src: url("./public/fonts/square/SquareSansText-Upright-VF.woff2") format("woff2");
+  }
+  
+  @font-face {
+    font-family: "Uber-Bold";
+    src: url("./public/fonts/square/SquareSansDisplay-VF.woff2") format("woff2");
+  }
+  
+  @font-face {
+    font-family: "Uber-Medium";
+    src: url("./public/fonts/square/SquareSansText-Medium.woff2") format("woff2");
+  }
+  * {
+    -webkit-user-select: none; /* Chrome, Safari, Opera */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera, and Firefox */
+  }
