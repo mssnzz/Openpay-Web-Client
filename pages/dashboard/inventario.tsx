@@ -46,7 +46,8 @@ export default function InventarioPage() {
     <Sidebar>
       <MaterialCssVarsProvider theme={{ [MATERIAL_THEME_ID]: materialTheme }}>
         <JoyCssVarsProvider>
-          <CssVarsProvider disableTransitionOnChange theme={theme}>
+          <CssVarsProvider 
+            defaultMode="light" disableTransitionOnChange theme={theme}>
             <CssBaseline />
             <Box sx={{ display: "flex", minHeight: "100dvh" }}>
               <Box

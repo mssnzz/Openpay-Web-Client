@@ -137,7 +137,11 @@ export default function Sidebar({ children }: SidebarProps): JSX.Element {
     <>
       <MaterialCssVarsProvider theme={{ [MATERIAL_THEME_ID]: materialTheme }}>
         <JoyCssVarsProvider>
-          <CssVarsProvider disableTransitionOnChange theme={theme}>
+          <CssVarsProvider
+            disableTransitionOnChange
+            defaultMode="light"
+            theme={theme}
+          >
             <Box sx={{ display: "flex", height: "100vh", width: "100%" }}>
               <Sheet
                 className="Sidebar"
@@ -191,54 +195,7 @@ export default function Sidebar({ children }: SidebarProps): JSX.Element {
                   }}
                   onClick={() => closeSidebar()}
                 />
-                <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
-                  <img
-                    src="https://tidyfresh-tidynewclient.6gpvax.easypanel.host/_next/image?url=%2Ftidylogo.png&w=384&q=75"
-                    width={40}
-                  />
-                  <Typography
-                    level="title-lg"
-                    sx={{
-                      fontFamily: "Uber-Bold",
-                      marginTop: -0.4,
-                      fontSize: 22,
-                    }}
-                  >
-                    Negocios
-                  </Typography>
-                  <Divider />
-                </Box>
 
-                <Box
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    textAlign: "left",
-                    border: "1px solid #ebebeb",
-                    padding: 1,
-                    borderRadius: 6,
-                  }}
-                >
-                  <Avatar
-                    sx={{ background: "#ebebeb" }}
-                    alt="Temy Sharp"
-                    src="https://tidyfresh-tidynewclient.6gpvax.easypanel.host/_next/image?url=%2Ftidylogo.png&w=384&q=75"
-                  />
-                  <Box sx={{ ml: 1 }}>
-                    <Typography sx={{ fontSize: 18, fontFamily: "Uber-Bold" }}>
-                      Tidyfresh
-                    </Typography>
-                    <Typography
-                      sx={{
-                        fontSize: 16,
-                        fontFamily: "Uber-Medium",
-                        color: "darkgray",
-                      }}
-                    >
-                      Lavandería
-                    </Typography>
-                  </Box>
-                </Box>
                 <Box
                   sx={{
                     minHeight: 0,
