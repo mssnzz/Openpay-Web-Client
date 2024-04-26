@@ -45,14 +45,14 @@ function MyInnerApp({ Component, pageProps }: any) {
           const response = await getProfile(logged?.user?.accessToken);
           console.log(response);
           if (response.error == true) {
-            setProfileLoaded(true); 
             setUserProfile(null);
             signOut({ callbackUrl: "/" });
 
           } else {
             setUserProfile(response.data);
-            setProfileLoaded(true); 
           }
+          setProfileLoaded(true); 
+
         } catch (error) {
           console.error("Error fetching user profile:", error);
         }
@@ -67,6 +67,8 @@ function MyInnerApp({ Component, pageProps }: any) {
     if (status === "authenticated" && router.pathname !== "/dashboard/inventario/lista") {
       // router.push("/dashboard/inventario/lista");
     } else if (status === "unauthenticated") {
+      setProfileLoaded(true); 
+
       router.push("/");
     }
   }, [session, router, status]);
