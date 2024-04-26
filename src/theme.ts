@@ -34,7 +34,16 @@ const joyTheme = extendedJoy({
   },
 });
 const materialTheme = createTheme({
+  palette: {
+    primary: {
+      main: '#005CE1',
+    },
+    secondary: {
+      main: '#FF4081',
+    },
+  },
   components: {
+    
     MuiFilledInput: {
       styleOverrides: {
         root: {
