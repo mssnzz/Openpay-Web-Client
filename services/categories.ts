@@ -1,6 +1,6 @@
 export const getCategories = async (id: any) => {
   try {
-    const url = `http://localhost:3003/categories/${id}`; // Asume que el endpoint acepta el pairingCode como parte de la URL
+    const url = `https://rabiasport-openpayapi.6gpvax.easypanel.host/categories/${id}`; // Asume que el endpoint acepta el pairingCode como parte de la URL
     const response = await fetch(url, {
       method: "GET",
       headers: {
@@ -28,7 +28,7 @@ export const getCategories = async (id: any) => {
   }
 };
 export const createCategory = async (categoryData: any) => {
-    const url = `http://localhost:3003/categories/`; // Endpoint para crear productos
+    const url = `https://rabiasport-openpayapi.6gpvax.easypanel.host/categories/`; // Endpoint para crear productos
     try {
       const response = await fetch(url, {
         method: "POST",

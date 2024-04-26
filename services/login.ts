@@ -1,6 +1,6 @@
 export const loginUser = async (email: string, password: string) => {
   try {
-    const response = await fetch("http://localhost:3003/users/login", {
+    const response = await fetch("https://rabiasport-openpayapi.6gpvax.easypanel.host/users/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

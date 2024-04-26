@@ -1,6 +1,6 @@
 export const getStores = async (id: any) => {
     try {
-      const url = `http://localhost:3003/stores/user/${id}`; // Asume que el endpoint acepta el pairingCode como parte de la URL
+      const url = `https://rabiasport-openpayapi.6gpvax.easypanel.host/stores/user/${id}`; // Asume que el endpoint acepta el pairingCode como parte de la URL
       const response = await fetch(url, {
         method: "GET",
         headers: {
@@ -29,7 +29,7 @@ export const getStores = async (id: any) => {
   };
   export const getProfile = async (token: any) => {
     try {
-      const url = `http://localhost:3003/users/profile`;
+      const url = `https://rabiasport-openpayapi.6gpvax.easypanel.host/users/profile`;
       const response = await fetch(url, {
         method: "GET",
         headers: {

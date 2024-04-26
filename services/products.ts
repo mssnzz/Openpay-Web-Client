@@ -1,6 +1,6 @@
 export const getProducts = async (id: any) => {
   try {
-    const url = `http://localhost:3003/products/store/${id}`; // Asume que el endpoint acepta el pairingCode como parte de la URL
+    const url = `https://rabiasport-openpayapi.6gpvax.easypanel.host/products/store/${id}`; // Asume que el endpoint acepta el pairingCode como parte de la URL
     const response = await fetch(url, {
       method: "GET",
       headers: {
@@ -28,7 +28,7 @@ export const getProducts = async (id: any) => {
   }
 };
 export const createProduct = async (productData: any) => {
-  const url = `http://localhost:3003/products/`; // Endpoint para crear productos
+  const url = `https://rabiasport-openpayapi.6gpvax.easypanel.host/products/`; // Endpoint para crear productos
   try {
     const response = await fetch(url, {
       method: "POST",
@@ -57,7 +57,7 @@ export const createProduct = async (productData: any) => {
   }
 };
 export const deleteProduct = async (productData: any) => {
-    const url = `http://localhost:3003/products/delete`; // Endpoint para crear productos
+    const url = `https://rabiasport-openpayapi.6gpvax.easypanel.host/products/delete`; // Endpoint para crear productos
     try {
       const response = await fetch(url, {
         method: "POST",
