@@ -29,6 +29,7 @@ import { Button, FormControl, InputAdornment, TextField } from "@mui/material";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import InputLabel from "@mui/material/InputLabel";
+import { getUserProfile } from "../context/profile";
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
   if (b[orderBy] < a[orderBy]) {
@@ -274,6 +275,10 @@ export default function OrderTable({ products, reloadProducts }: any) {
     page * rowsPerPage,
     page * rowsPerPage + rowsPerPage
   );
+
+  const userData = getUserProfile();
+  const isRetail = userData.user.brands.category === "Retail";
+
   return (
     <React.Fragment>
       <Sheet
@@ -461,29 +466,79 @@ export default function OrderTable({ products, reloadProducts }: any) {
               >
                 Estado
               </th>
-
-              <th
-                style={{
-                  width: 100,
-                  padding: "12px 6px",
-                  fontFamily: "Uber-Medium",
-                  fontWeight: 500,
-                  fontSize: 18,
-                }}
-              >
-                Stock
-              </th>
-              <th
-                style={{
-                  width: 240,
-                  padding: "12px 6px",
-                  fontFamily: "Uber-Medium",
-                  fontWeight: 500,
-                  fontSize: 18,
-                }}
-              >
-                Variaciones
-              </th>
+              {isRetail ? (
+                <>
+                  <th
+                    style={{
+                      width: 100,
+                      padding: "12px 6px",
+                      fontFamily: "Uber-Medium",
+                      fontWeight: 500,
+                      fontSize: 18,
+                    }}
+                  >
+                    Stock
+                  </th>
+                  <th
+                    style={{
+                      width: 240,
+                      padding: "12px 6px",
+                      fontFamily: "Uber-Medium",
+                      fontWeight: 500,
+                      fontSize: 18,
+                    }}
+                  >
+                    Variaciones
+                  </th>
+                </>
+              ) : (
+                <>
+                  <th
+                    style={{
+                      width: 200,
+                      padding: "12px 6px",
+                      fontFamily: "Uber-Medium",
+                      fontWeight: 500,
+                      fontSize: 18,
+                    }}
+                  >
+                    Precio venta
+                  </th>
+                  <th
+                    style={{
+                      width: 200,
+                      padding: "12px 6px",
+                      fontFamily: "Uber-Medium",
+                      fontWeight: 500,
+                      fontSize: 18,
+                    }}
+                  >
+                    Precio compra
+                  </th>
+                  <th
+                    style={{
+                      width: 200,
+                      padding: "12px 6px",
+                      fontFamily: "Uber-Medium",
+                      fontWeight: 500,
+                      fontSize: 18,
+                    }}
+                  >
+                    Stock mínimo
+                  </th>
+                  <th
+                    style={{
+                      width: 200,
+                      padding: "12px 6px",
+                      fontFamily: "Uber-Medium",
+                      fontWeight: 500,
+                      fontSize: 18,
+                    }}
+                  >
+                    Stock disponible
+                  </th>
+                </>
+              )}
               <th
                 style={{
                   width: 240,
@@ -594,7 +649,94 @@ export default function OrderTable({ products, reloadProducts }: any) {
                   )}
                 </td>
 
-                <td>
+                {isRetail ? (
+                  <>
+                    <td>
+                      <Typography
+                        level="body-xs"
+                        sx={{
+                          fontFamily: "Uber-Regular",
+                          fontWeight: 400,
+                          fontSize: 18,
+                        }}
+                      >
+                        {row.variations.reduce(
+                          (acc: number, variation: any) =>
+                            acc + variation.stock,
+                          0
+                        )}
+                      </Typography>
+                    </td>
+                    <td>
+                      <Typography level="body-xs">
+                        {row.variations.length > 0 ? (
+                          row.variations.map((variation: any, index: any) => (
+                            <Chip
+                              key={index}
+                              sx={{
+                                mr: 0.5,
+                                fontFamily: "Uber-Regular",
+                                fontWeight: 500,
+                                fontSize: 18,
+                              }}
+                            >
+                              {variation.name}
+                            </Chip>
+                          ))
+                        ) : (
+                          <Typography
+                            level="body-xs"
+                            sx={{
+                              fontFamily: "Uber-Regular",
+                              fontWeight: 400,
+                              fontSize: 14,
+                            }}
+                          >
+                            No disponible
+                          </Typography>
+                        )}
+                      </Typography>
+                    </td>
+                  </>
+                ) : (
+                  <>
+                    <td>
+                      <Typography
+                        level="body-xs"
+                        sx={{
+                          fontFamily: "Uber-Regular",
+                          fontWeight: 400,
+                          fontSize: 18,
+                        }}
+                      >
+                        {row.precioCompra || "No disponible"}
+                      </Typography>
+                    </td>
+                    <td>
+                      <Typography
+                        level="body-xs"
+                        sx={{
+                          fontFamily: "Uber-Regular",
+                          fontWeight: 400,
+                          fontSize: 18,
+                        }}
+                      >
+                        {row.precioVenta || "No disponible"}
+                      </Typography>
+                    </td>
+                    <td>
+                      <Typography
+                        level="body-xs"
+                        sx={{
+                          fontFamily: "Uber-Regular",
+                          fontWeight: 400,
+                          fontSize: 18,
+                        }}
+                      >
+                        {row.minimumStock || "No disponible"}
+                      </Typography>
+                    </td>{" "}
+                    <td>
                   <Typography
                     level="body-xs"
                     sx={{
@@ -603,43 +745,10 @@ export default function OrderTable({ products, reloadProducts }: any) {
                       fontSize: 18,
                     }}
                   >
-                    {row.variations.reduce(
-                      (acc: number, variation: any) => acc + variation.stock,
-                      0
-                    )}
+                    {row.stockAvailable || "No disponible"}
                   </Typography>
-                </td>
-                <td>
-                  <Typography level="body-xs">
-                    {row.variations.length > 0 ? (
-                      row.variations.map((variation: any, index: any) => (
-                        <Chip
-                          key={index}
-                          sx={{
-                            mr: 0.5,
-                            fontFamily: "Uber-Regular",
-                            fontWeight: 500,
-                            fontSize: 18,
-                          }}
-                        >
-                          {variation.name}
-                        </Chip>
-                      ))
-                    ) : (
-                      <Typography
-                        level="body-xs"
-                        sx={{
-                          fontFamily: "Uber-Regular",
-                          fontWeight: 400,
-                          fontSize: 14,
-                        }}
-                      >
-                        No disponible
-                      </Typography>
-                    )}
-                  </Typography>
-                </td>
-
+                </td>                  </>
+                )}
                 <td>
                   {row.categories.map((category: any, index: any) => (
                     <Chip

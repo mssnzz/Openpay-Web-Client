@@ -28,6 +28,7 @@ import { useEffect, useState } from "react";
 import { getCategories } from "../services/categories";
 import { getStores } from "../services/users";
 import { createProduct } from "../services/products";
+import { getUserProfile } from "../context/profile";
 
 export default function NewProduct({ setOpen, reloadProducts }: any) {
   const [categories, setCategories] = useState([]);
@@ -101,6 +102,9 @@ export default function NewProduct({ setOpen, reloadProducts }: any) {
       name: formData.get("name") || "", // Provide default empty string if nothing is entered
       barcode: formData.get("barcode") || "",
       description: formData.get("description") || "",
+      precioCompra: formData.get("precioCompra") || "",
+      precioVenta: formData.get("precioVenta") || "",
+      stockAvailable: formData.get("stockAvailable") || "",
 
       categoryIds: selectedCategories, // Assuming selectedCategories is an array of category IDs
       storeIds: selectedStores, // Assuming selectedStores is an array of store IDs
@@ -118,6 +122,7 @@ export default function NewProduct({ setOpen, reloadProducts }: any) {
     };
 
     // Use createProduct to send the request
+    console.log(productData);
     const result = await createProduct(productData);
 
     if (result.error) {
@@ -128,6 +133,8 @@ export default function NewProduct({ setOpen, reloadProducts }: any) {
     }
   };
 
+  const userData = getUserProfile();
+  console.log(userData);
   return (
     <Sheet
       sx={{
@@ -138,18 +145,18 @@ export default function NewProduct({ setOpen, reloadProducts }: any) {
         gap: 2,
         height: "100%",
         overflow: "hidden",
+        background: "#fff",
       }}
     >
-      <DialogTitle sx={{ fontFamily: "Uber-Medium", fontWeight: 500 }}>
+      <DialogTitle
+        sx={{ fontFamily: "Uber-Bold", fontSize: 32, color: "black", mb: 4, mt: 2, letterSpacing: 0 }}
+      >
         Nuevo producto
       </DialogTitle>
-      <ModalClose />
-      <Divider sx={{ mt: "auto" }} />
+      <ModalClose size="lg" sx={{marginRight: 1.5, marginTop: 3}} />
       <DialogContent sx={{ gap: 2 }}>
         <form id="productForm" onSubmit={handleSubmit}>
           <Box sx={{ display: "flex", gap: 2, overflowX: "hidden" }}>
-            {/* Columna Izquierda: Datos Principales */}
-
             <Box sx={{ flex: 1 }}>
               <Stack spacing={1}>
                 <FormControl>
@@ -158,33 +165,7 @@ export default function NewProduct({ setOpen, reloadProducts }: any) {
                     label="Nombre del producto"
                     name="name" // Make sure the name attribute is set
                     variant="filled"
-                    sx={{
-                      "& .MuiFilledInput-root": {
-                        background: "#fff", // Fondo blanco
-                        border: "1px solid #ccc", // Borde completo en todos los lados
-                        borderBottom: "1px solid #ccc", // Asegurarse de que no hay borde inferior
-                        borderRadius: "4px", // Bordes redondeados ligeramente
-                        "&:hover": {
-                          borderColor: "#b3b3b3", // Color de borde al pasar el mouse
-                        },
-                        "&.Mui-focused": {
-                          borderColor: "#3f51b5", // Color de borde al enfocar
-                        },
-                      },
-                      "& .MuiInputBase-input": {
-                        // Estilos para el texto del input
-                        fontFamily: "Uber-Medium", // Aplicar la fuente Uber-Medium
-                        fontSize: "1rem", // Puedes ajustar el tamaño de la fuente aquí si es necesario
-                      },
-                      "& .MuiInputLabel-root": {
-                        // Apunta al label del TextField
-                        fontFamily: "Uber-Medium", // Fuente personalizada para el label
-                      },
-                      "& .MuiFilledInput-underline:before, & .MuiFilledInput-underline:after":
-                        {
-                          display: "none", // Esconder las líneas de underline por completo
-                        },
-                    }}
+                   
                   />
                 </FormControl>
                 <Box
@@ -199,35 +180,7 @@ export default function NewProduct({ setOpen, reloadProducts }: any) {
                   <FormControl
                     variant="filled"
                     sx={{
-                      width: 275,
-                      "& .MuiFilledInput-root": {
-                        background: "#fff", // Fondo blanco
-                        border: "1px solid #ccc", // Borde completo en todos los lados
-                        borderRadius: "4px", // Bordes redondeados ligeramente
-                        height: 70,
-                        "&:hover": {
-                          borderColor: "#b3b3b3", // Color de borde al pasar el mouse
-                        },
-                        "&.Mui-focused": {
-                          borderColor: "#3f51b5", // Color de borde al enfocar
-                          boxShadow: "0 0 0 2px rgba(63,81,181,0.25)", // Agrega un boxShadow si quieres un indicador de foco
-                        },
-                      },
-                      "& .MuiInputBase-input": {
-                        fontFamily: "Uber-Medium", // Aplicar la fuente Uber-Medium
-                        fontSize: "1rem", // Ajustar el tamaño de la fuente aquí si es necesario
-                      },
-                      "& .MuiInputLabel-root": {
-                        fontFamily: "Uber-Medium", // Fuente personalizada para el label
-                        marginTop: 1,
-                        "&.Mui-focused": {
-                          color: "#3f51b5", // Cambiar el color al enfocar
-                        },
-                      },
-                      "& .MuiFilledInput-underline:before, & .MuiFilledInput-underline:after":
-                        {
-                          display: "none", // Esconder las líneas de underline por completo
-                        },
+                      width: 275
                     }}
                   >
                     <InputLabel id="demo-multiple-chip-label">
@@ -289,34 +242,7 @@ export default function NewProduct({ setOpen, reloadProducts }: any) {
                     variant="filled"
                     sx={{
                       width: 275,
-                      "& .MuiFilledInput-root": {
-                        background: "#fff", // Fondo blanco
-                        border: "1px solid #ccc", // Borde completo en todos los lados
-                        borderRadius: "4px", // Bordes redondeados ligeramente
-                        height: 70,
-                        "&:hover": {
-                          borderColor: "#b3b3b3", // Color de borde al pasar el mouse
-                        },
-                        "&.Mui-focused": {
-                          borderColor: "#3f51b5", // Color de borde al enfocar
-                          boxShadow: "0 0 0 2px rgba(63,81,181,0.25)", // Agrega un boxShadow si quieres un indicador de foco
-                        },
-                      },
-                      "& .MuiInputBase-input": {
-                        fontFamily: "Uber-Medium", // Aplicar la fuente Uber-Medium
-                        fontSize: "1rem", // Ajustar el tamaño de la fuente aquí si es necesario
-                      },
-                      "& .MuiInputLabel-root": {
-                        fontFamily: "Uber-Medium", // Fuente personalizada para el label
-                        marginTop: 1,
-                        "&.Mui-focused": {
-                          color: "#3f51b5", // Cambiar el color al enfocar
-                        },
-                      },
-                      "& .MuiFilledInput-underline:before, & .MuiFilledInput-underline:after":
-                        {
-                          display: "none", // Esconder las líneas de underline por completo
-                        },
+                     
                     }}
                   >
                     <InputLabel id="demo-multiple-chip-label">
@@ -380,35 +306,8 @@ export default function NewProduct({ setOpen, reloadProducts }: any) {
                     id="outlined-textarea"
                     label="Descripción"
                     name="description"
-                    multiline
                     variant="filled"
-                    sx={{
-                      "& .MuiFilledInput-root": {
-                        background: "#fff", // Fondo blanco
-                        border: "1px solid #ccc", // Borde completo en todos los lados
-                        borderBottom: "1px solid #ccc", // Asegurarse de que no hay borde inferior
-                        borderRadius: "4px", // Bordes redondeados ligeramente
-                        "&:hover": {
-                          borderColor: "#b3b3b3", // Color de borde al pasar el mouse
-                        },
-                        "&.Mui-focused": {
-                          borderColor: "#3f51b5", // Color de borde al enfocar
-                        },
-                      },
-                      "& .MuiInputBase-input": {
-                        // Estilos para el texto del input
-                        fontFamily: "Uber-Medium", // Aplicar la fuente Uber-Medium
-                        fontSize: "1rem", // Puedes ajustar el tamaño de la fuente aquí si es necesario
-                      },
-                      "& .MuiInputLabel-root": {
-                        // Apunta al label del TextField
-                        fontFamily: "Uber-Medium", // Fuente personalizada para el label
-                      },
-                      "& .MuiFilledInput-underline:before, & .MuiFilledInput-underline:after":
-                        {
-                          display: "none", // Esconder las líneas de underline por completo
-                        },
-                    }}
+                    
                   />
                 </FormControl>
                 <FormControl>
@@ -417,223 +316,271 @@ export default function NewProduct({ setOpen, reloadProducts }: any) {
                     label="Código de barra"
                     variant="filled"
                     name="barcode"
-                    sx={{
-                      "& .MuiFilledInput-root": {
-                        background: "#fff", // Fondo blanco
-                        border: "1px solid #ccc", // Borde completo en todos los lados
-                        borderBottom: "1px solid #ccc", // Asegurarse de que no hay borde inferior
-                        borderRadius: "4px", // Bordes redondeados ligeramente
-                        "&:hover": {
-                          borderColor: "#b3b3b3", // Color de borde al pasar el mouse
-                        },
-                        "&.Mui-focused": {
-                          borderColor: "#3f51b5", // Color de borde al enfocar
-                        },
-                      },
-                      "& .MuiInputBase-input": {
-                        // Estilos para el texto del input
-                        fontFamily: "Uber-Medium", // Aplicar la fuente Uber-Medium
-                        fontSize: "1rem", // Puedes ajustar el tamaño de la fuente aquí si es necesario
-                      },
-                      "& .MuiInputLabel-root": {
-                        // Apunta al label del TextField
-                        fontFamily: "Uber-Medium", // Fuente personalizada para el label
-                      },
-                      "& .MuiFilledInput-underline:before, & .MuiFilledInput-underline:after":
-                        {
-                          display: "none", // Esconder las líneas de underline por completo
-                        },
-                    }}
+                   
                   />
                 </FormControl>
-                <Divider
-                  sx={(theme) => ({
-                    [theme.getColorSchemeSelector("light")]: {
-                      color: {
-                        xs: "#FFF",
-                        md: "text.tertiary",
-                        fontFamily: "Uber-Medium",
-                        marginTop: 18,
-                        marginBottom: 14,
-                      },
-                    },
-                  })}
-                >
-                  Variaciones y precios
-                </Divider>
-                <Box sx={{ flex: 1, overflow: "hidden" }}>
-                  {variations.map((variation: any, index: any) => (
-                    <Stack
-                      key={index}
-                      direction="row"
-                      alignItems="center" // Asegúrese de alinear los ítems verticalmente
-                      spacing={2}
-                      sx={{ maxWidth: "100%", overflow: "hidden", mb: 1 }}
+                {userData?.user.brands.category == "Retail" ? (
+                  <Box>
+                    <Divider
+                      sx={(theme) => ({
+                        [theme.getColorSchemeSelector("light")]: {
+                          color: {
+                            xs: "#FFF",
+                            md: "text.tertiary",
+                            fontFamily: "Uber-Medium",
+                            marginTop: 18,
+                            marginBottom: 14,
+                          },
+                        },
+                      })}
                     >
-                      {/* Input para nombre, tipo texto */}
+                      Variaciones y precios
+                    </Divider>
+                    <Box sx={{ flex: 1, overflow: "hidden" }}>
+                      {variations.map((variation: any, index: any) => (
+                        <Stack
+                          key={index}
+                          direction="row"
+                          alignItems="center" // Asegúrese de alinear los ítems verticalmente
+                          spacing={2}
+                          sx={{ maxWidth: "100%", overflow: "hidden", mb: 1 }}
+                        >
+                          {/* Input para nombre, tipo texto */}
+                          <TextField
+                            id={`nombre-variacion-${index}`}
+                            label="Nombre"
+                            variant="filled"
+                            name={`variations[${index}].name`}
+                            value={variation.name}
+                            onChange={(event) =>
+                              handleVariationChange(
+                                index,
+                                "name",
+                                event.target.value
+                              )
+                            }
+                            sx={{
+                              "& .MuiFilledInput-root": {
+                                background: "#fff", // Fondo blanco
+                                border: "1px solid #ccc", // Borde completo en todos los lados
+                                borderRadius: "4px", // Bordes redondeados ligeramente
+                                "&:hover": {
+                                  borderColor: "#b3b3b3", // Color de borde al pasar el mouse
+                                },
+                                "&.Mui-focused": {
+                                  borderColor: "#3f51b5", // Color de borde al enfocar
+                                  boxShadow: "0 0 0 2px rgba(63,81,181,0.25)", // Agrega un boxShadow si quieres un indicador de foco
+                                },
+                              },
+                              "& .MuiInputBase-input": {
+                                fontFamily: "Uber-Medium", // Aplicar la fuente Uber-Medium
+                                fontSize: "1rem", // Ajustar el tamaño de la fuente aquí si es necesario
+                              },
+                              "& .MuiInputLabel-root": {
+                                fontFamily: "Uber-Medium", // Fuente personalizada para el label
+                                "&.Mui-focused": {
+                                  color: "#3f51b5", // Cambiar el color al enfocar
+                                },
+                              },
+                              "& .MuiFilledInput-underline:before, & .MuiFilledInput-underline:after":
+                                {
+                                  display: "none", // Esconder las líneas de underline por completo
+                                },
+                            }}
+                          />
+
+                          {/* Input para precio, tipo número pero formateado como dinero */}
+                          <TextField
+                            id={`precio-base-variacion-${index}`}
+                            label="Precio base"
+                            variant="filled"
+                            type="number"
+                            name={`variations[${index}].price`}
+                            value={variation.price}
+                            onChange={(event) =>
+                              handleVariationChange(
+                                index,
+                                "price",
+                                event.target.value
+                              )
+                            }
+                            sx={{
+                              "& .MuiFilledInput-root": {
+                                background: "#fff", // Fondo blanco
+                                border: "1px solid #ccc", // Borde completo en todos los lados
+                                borderRadius: "4px", // Bordes redondeados ligeramente
+                                "&:hover": {
+                                  borderColor: "#b3b3b3", // Color de borde al pasar el mouse
+                                },
+                                "&.Mui-focused": {
+                                  borderColor: "#3f51b5", // Color de borde al enfocar
+                                  boxShadow: "0 0 0 2px rgba(63,81,181,0.25)", // Agrega un boxShadow si quieres un indicador de foco
+                                },
+                              },
+                              "& .MuiInputBase-input": {
+                                fontFamily: "Uber-Medium", // Aplicar la fuente Uber-Medium
+                                fontSize: "1rem", // Ajustar el tamaño de la fuente aquí si es necesario
+                              },
+                              "& .MuiInputLabel-root": {
+                                fontFamily: "Uber-Medium", // Fuente personalizada para el label
+                                "&.Mui-focused": {
+                                  color: "#3f51b5", // Cambiar el color al enfocar
+                                },
+                              },
+                              "& .MuiFilledInput-underline:before, & .MuiFilledInput-underline:after":
+                                {
+                                  display: "none", // Esconder las líneas de underline por completo
+                                },
+                            }}
+
+                            // ...resto de tus estilos
+                          />
+
+                          {/* Input para stock, tipo número */}
+                          <TextField
+                            id={`stock-variacion-${index}`}
+                            label="Stock"
+                            variant="filled"
+                            type="number"
+                            name={`variations[${index}].stock`}
+                            value={variation.stock}
+                            onChange={(event) =>
+                              handleVariationChange(
+                                index,
+                                "stock",
+                                event.target.value
+                              )
+                            }
+                            sx={{
+                              "& .MuiFilledInput-root": {
+                                background: "#fff", // Fondo blanco
+                                border: "1px solid #ccc", // Borde completo en todos los lados
+                                borderRadius: "4px", // Bordes redondeados ligeramente
+                                "&:hover": {
+                                  borderColor: "#b3b3b3", // Color de borde al pasar el mouse
+                                },
+                                "&.Mui-focused": {
+                                  borderColor: "#3f51b5", // Color de borde al enfocar
+                                  boxShadow: "0 0 0 2px rgba(63,81,181,0.25)", // Agrega un boxShadow si quieres un indicador de foco
+                                },
+                              },
+                              "& .MuiInputBase-input": {
+                                fontFamily: "Uber-Medium", // Aplicar la fuente Uber-Medium
+                                fontSize: "1rem", // Ajustar el tamaño de la fuente aquí si es necesario
+                              },
+                              "& .MuiInputLabel-root": {
+                                fontFamily: "Uber-Medium", // Fuente personalizada para el label
+                                "&.Mui-focused": {
+                                  color: "#3f51b5", // Cambiar el color al enfocar
+                                },
+                              },
+                              "& .MuiFilledInput-underline:before, & .MuiFilledInput-underline:after":
+                                {
+                                  display: "none", // Esconder las líneas de underline por completo
+                                },
+                            }}
+                            inputProps={{
+                              // Nota el uso de 'inputProps' en lugar de 'InputProps' para atributos nativos
+                              min: 0, // Mínimo valor 0 para evitar números negativos
+                            }}
+                            // ...resto de tus estilos
+                          />
+
+                          <IconButton
+                            aria-label="delete"
+                            onClick={() => handleRemoveVariation(index)}
+                            sx={{
+                              "&:hover": {
+                                backgroundColor: "rgba(255, 0, 0, 0.1)", // Color de fondo al pasar el mouse
+                              },
+                            }}
+                          >
+                            <Close /> {/* Este icono representa la "X" */}
+                          </IconButton>
+                        </Stack>
+                      ))}
+                    </Box>
+
+                    <Button
+                      sx={{ fontFamily: "Uber-Regular", fontWeight: 500 }}
+                      variant="outlined"
+                      onClick={addVariation}
+                    >
+                      <Add sx={{ marginRight: 1 }} />
+                      Nueva variación
+                    </Button>
+                  </Box>
+                ) : (
+                  <Stack spacing={1}>
+                    <Divider
+                      sx={(theme) => ({
+                        [theme.getColorSchemeSelector("light")]: {
+                          color: {
+                            xs: "#FFF",
+                            md: "text.tertiary",
+                            fontFamily: "Uber-Medium",
+                            marginTop: 18,
+                            marginBottom: 14,
+                          },
+                        },
+                      })}
+                    >
+                      Información de inventario
+                    </Divider>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        gap: 2,
+                        justifyContent: "space-between",
+                        maxWidth: "100%",
+                      }}
+                    >
+                      {/* Columna Izquierda: Categorías disponibles */}
+                      <FormControl>
+                        <TextField
+                          id="filled-basic"
+                          label="Precio de compra"
+                          variant="filled"
+                          name="precioCompra"
+                          sx={{
+                            width: 275,
+                           
+                          }}
+                        />
+                      </FormControl>
+                      <FormControl>
+                        <TextField
+                          id="filled-basic"
+                          label="Stock disponible"
+                          variant="filled"
+                          name="stockAvailable"
+                          sx={{
+                            width: 275,
+                           
+                          }}
+                        />
+                      </FormControl>
+                    </Box>
+                    <FormControl>
                       <TextField
-                        id={`nombre-variacion-${index}`}
-                        label="Nombre"
+                        id="filled-basic"
+                        label="Precio de venta"
                         variant="filled"
-                        name={`variations[${index}].name`}
-                        value={variation.name}
-                        onChange={(event) =>
-                          handleVariationChange(
-                            index,
-                            "name",
-                            event.target.value
-                          )
-                        }
-                        sx={{
-                          "& .MuiFilledInput-root": {
-                            background: "#fff", // Fondo blanco
-                            border: "1px solid #ccc", // Borde completo en todos los lados
-                            borderRadius: "4px", // Bordes redondeados ligeramente
-                            "&:hover": {
-                              borderColor: "#b3b3b3", // Color de borde al pasar el mouse
-                            },
-                            "&.Mui-focused": {
-                              borderColor: "#3f51b5", // Color de borde al enfocar
-                              boxShadow: "0 0 0 2px rgba(63,81,181,0.25)", // Agrega un boxShadow si quieres un indicador de foco
-                            },
-                          },
-                          "& .MuiInputBase-input": {
-                            fontFamily: "Uber-Medium", // Aplicar la fuente Uber-Medium
-                            fontSize: "1rem", // Ajustar el tamaño de la fuente aquí si es necesario
-                          },
-                          "& .MuiInputLabel-root": {
-                            fontFamily: "Uber-Medium", // Fuente personalizada para el label
-                            "&.Mui-focused": {
-                              color: "#3f51b5", // Cambiar el color al enfocar
-                            },
-                          },
-                          "& .MuiFilledInput-underline:before, & .MuiFilledInput-underline:after":
-                            {
-                              display: "none", // Esconder las líneas de underline por completo
-                            },
-                        }}
+                        name="precioVenta"
+                        
                       />
-
-                      {/* Input para precio, tipo número pero formateado como dinero */}
+                    </FormControl>
+                    <FormControl>
                       <TextField
-                        id={`precio-base-variacion-${index}`}
-                        label="Precio base"
+                        id="filled-basic"
+                        label="Stock minimo"
                         variant="filled"
-                        type="number"
-                        name={`variations[${index}].price`}
-                        value={variation.price}
-                        onChange={(event) =>
-                          handleVariationChange(
-                            index,
-                            "price",
-                            event.target.value
-                          )
-                        }
-                        sx={{
-                          "& .MuiFilledInput-root": {
-                            background: "#fff", // Fondo blanco
-                            border: "1px solid #ccc", // Borde completo en todos los lados
-                            borderRadius: "4px", // Bordes redondeados ligeramente
-                            "&:hover": {
-                              borderColor: "#b3b3b3", // Color de borde al pasar el mouse
-                            },
-                            "&.Mui-focused": {
-                              borderColor: "#3f51b5", // Color de borde al enfocar
-                              boxShadow: "0 0 0 2px rgba(63,81,181,0.25)", // Agrega un boxShadow si quieres un indicador de foco
-                            },
-                          },
-                          "& .MuiInputBase-input": {
-                            fontFamily: "Uber-Medium", // Aplicar la fuente Uber-Medium
-                            fontSize: "1rem", // Ajustar el tamaño de la fuente aquí si es necesario
-                          },
-                          "& .MuiInputLabel-root": {
-                            fontFamily: "Uber-Medium", // Fuente personalizada para el label
-                            "&.Mui-focused": {
-                              color: "#3f51b5", // Cambiar el color al enfocar
-                            },
-                          },
-                          "& .MuiFilledInput-underline:before, & .MuiFilledInput-underline:after":
-                            {
-                              display: "none", // Esconder las líneas de underline por completo
-                            },
-                        }}
-
-                        // ...resto de tus estilos
+                        name="minimumStock"
+                        
                       />
-
-                      {/* Input para stock, tipo número */}
-                      <TextField
-                        id={`stock-variacion-${index}`}
-                        label="Stock"
-                        variant="filled"
-                        type="number"
-                        name={`variations[${index}].stock`}
-                        value={variation.stock}
-                        onChange={(event) =>
-                          handleVariationChange(
-                            index,
-                            "stock",
-                            event.target.value
-                          )
-                        }
-                        sx={{
-                          "& .MuiFilledInput-root": {
-                            background: "#fff", // Fondo blanco
-                            border: "1px solid #ccc", // Borde completo en todos los lados
-                            borderRadius: "4px", // Bordes redondeados ligeramente
-                            "&:hover": {
-                              borderColor: "#b3b3b3", // Color de borde al pasar el mouse
-                            },
-                            "&.Mui-focused": {
-                              borderColor: "#3f51b5", // Color de borde al enfocar
-                              boxShadow: "0 0 0 2px rgba(63,81,181,0.25)", // Agrega un boxShadow si quieres un indicador de foco
-                            },
-                          },
-                          "& .MuiInputBase-input": {
-                            fontFamily: "Uber-Medium", // Aplicar la fuente Uber-Medium
-                            fontSize: "1rem", // Ajustar el tamaño de la fuente aquí si es necesario
-                          },
-                          "& .MuiInputLabel-root": {
-                            fontFamily: "Uber-Medium", // Fuente personalizada para el label
-                            "&.Mui-focused": {
-                              color: "#3f51b5", // Cambiar el color al enfocar
-                            },
-                          },
-                          "& .MuiFilledInput-underline:before, & .MuiFilledInput-underline:after":
-                            {
-                              display: "none", // Esconder las líneas de underline por completo
-                            },
-                        }}
-                        inputProps={{
-                          // Nota el uso de 'inputProps' en lugar de 'InputProps' para atributos nativos
-                          min: 0, // Mínimo valor 0 para evitar números negativos
-                        }}
-                        // ...resto de tus estilos
-                      />
-
-                      <IconButton
-                        aria-label="delete"
-                        onClick={() => handleRemoveVariation(index)}
-                        sx={{
-                          "&:hover": {
-                            backgroundColor: "rgba(255, 0, 0, 0.1)", // Color de fondo al pasar el mouse
-                          },
-                        }}
-                      >
-                        <Close /> {/* Este icono representa la "X" */}
-                      </IconButton>
-                    </Stack>
-                  ))}
-                </Box>
-
-                <Button
-                  sx={{ fontFamily: "Uber-Regular", fontWeight: 500 }}
-                  variant="outlined"
-                  onClick={addVariation}
-                >
-                  <Add sx={{ marginRight: 1 }} />
-                  Nueva variación
-                </Button>
+                    </FormControl>
+                  </Stack>
+                )}
               </Stack>
             </Box>
           </Box>
@@ -647,13 +594,14 @@ export default function NewProduct({ setOpen, reloadProducts }: any) {
         useFlexGap
         spacing={1}
       >
-        <Button variant="outlined" sx={{ fontFamily: "Uber-Medium" }}>
+        <Button variant="outlined" sx={{ fontFamily: "Uber-Medium", boxShadow: "none", fontSize: 18, textTransform: "none" }}>
           Cancelar
         </Button>
         <Button
           form="productForm"
           type="submit"
-          sx={{ fontFamily: "Uber-Medium" }}
+          variant="contained"
+          sx={{ fontFamily: "Uber-Medium", boxShadow: "none", fontSize: 18, textTransform: "none" }}
         >
           Continuar
         </Button>

@@ -29,7 +29,6 @@ interface SignInFormElement extends HTMLFormElement {
   readonly elements: FormElements;
 }
 
-
 const StyledInput = styled("input")({
   border: "none", // remove the native input border
   minWidth: 0, // remove the native input width
@@ -166,24 +165,15 @@ export default function Home() {
         email, // Corregido de 'correo' a 'email'
         password, // Corregido de 'contra' a 'password'
       });
-      router.push("/dashboard")
+      router.push("/dashboard");
       if (result?.error == null) {
         console.log(result);
-    }
+      }
     }
   };
 
   return (
-    <CssVarsProvider defaultMode="light" disableTransitionOnChange>
-      <CssBaseline />
-      <GlobalStyles
-        styles={{
-          ":root": {
-            "--Form-maxWidth": "800px",
-            "--Transition-duration": "0.4s", // set to `none` to disable transition
-          },
-        }}
-      />
+    <>
       <Box
         sx={(theme) => ({
           width: { xs: "100%", md: "50vw" },
@@ -390,6 +380,6 @@ export default function Home() {
           },
         })}
       />
-    </CssVarsProvider>
+    </>
   );
 }

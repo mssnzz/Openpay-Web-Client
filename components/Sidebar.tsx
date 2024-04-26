@@ -135,283 +135,273 @@ export default function Sidebar({ children }: SidebarProps): JSX.Element {
   }, []);
   return (
     <>
-      <MaterialCssVarsProvider theme={{ [MATERIAL_THEME_ID]: materialTheme }}>
-        <JoyCssVarsProvider>
-          <CssVarsProvider
-            disableTransitionOnChange
-            defaultMode="light"
-            theme={theme}
+      <Box sx={{ display: "flex", height: "100vh", width: "100%" }}>
+        <Sheet
+          className="Sidebar"
+          sx={{
+            position: { xs: "fixed", md: "sticky" },
+            transform: {
+              xs: "translateX(calc(100% * (var(--SideNavigation-slideIn, 0) - 1)))",
+              md: "none",
+            },
+            transition: "transform 0.4s, width 0.4s",
+            zIndex: 10000,
+            height: "100dvh",
+            width: "var(--Sidebar-width)",
+            top: 0,
+            p: 2,
+            flexShrink: 0,
+            display: "flex",
+            flexDirection: "column",
+            gap: 2,
+            borderRight: "1px solid",
+            borderColor: "divider",
+            background: "#fff",
+          }}
+        >
+          <GlobalStyles
+            styles={(theme) => ({
+              ":root": {
+                "--Sidebar-width": "280px",
+                [theme.breakpoints.up("lg")]: {
+                  "--Sidebar-width": "300px",
+                },
+              },
+            })}
+          />
+          <Box
+            className="Sidebar-overlay"
+            sx={{
+              position: "fixed",
+              zIndex: 9998,
+              top: 0,
+              left: 0,
+              width: "100vw",
+              height: "100vh",
+              opacity: "var(--SideNavigation-slideIn)",
+              backgroundColor: "var(--joy-palette-background-backdrop)",
+              transition: "opacity 0.4s",
+              transform: {
+                xs: "translateX(calc(100% * (var(--SideNavigation-slideIn, 0) - 1) + var(--SideNavigation-slideIn, 0) * var(--Sidebar-width, 0px)))",
+                lg: "translateX(-100%)",
+              },
+            }}
+            onClick={() => closeSidebar()}
+          />
+
+          <Box
+            sx={{
+              minHeight: 0,
+              overflow: "hidden auto",
+              flexGrow: 1,
+              display: "flex",
+              flexDirection: "column",
+              [`& .${listItemButtonClasses.root}`]: {
+                gap: 1.5,
+              },
+            }}
           >
-            <Box sx={{ display: "flex", height: "100vh", width: "100%" }}>
-              <Sheet
-                className="Sidebar"
-                sx={{
-                  position: { xs: "fixed", md: "sticky" },
-                  transform: {
-                    xs: "translateX(calc(100% * (var(--SideNavigation-slideIn, 0) - 1)))",
-                    md: "none",
-                  },
-                  transition: "transform 0.4s, width 0.4s",
-                  zIndex: 10000,
-                  height: "100dvh",
-                  width: "var(--Sidebar-width)",
-                  top: 0,
-                  p: 2,
-                  flexShrink: 0,
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: 2,
-                  borderRight: "1px solid",
-                  borderColor: "divider",
-                  background: "#fff",
-                }}
-              >
-                <GlobalStyles
-                  styles={(theme) => ({
-                    ":root": {
-                      "--Sidebar-width": "280px",
-                      [theme.breakpoints.up("lg")]: {
-                        "--Sidebar-width": "300px",
-                      },
-                    },
-                  })}
-                />
-                <Box
-                  className="Sidebar-overlay"
-                  sx={{
-                    position: "fixed",
-                    zIndex: 9998,
-                    top: 0,
-                    left: 0,
-                    width: "100vw",
-                    height: "100vh",
-                    opacity: "var(--SideNavigation-slideIn)",
-                    backgroundColor: "var(--joy-palette-background-backdrop)",
-                    transition: "opacity 0.4s",
-                    transform: {
-                      xs: "translateX(calc(100% * (var(--SideNavigation-slideIn, 0) - 1) + var(--SideNavigation-slideIn, 0) * var(--Sidebar-width, 0px)))",
-                      lg: "translateX(-100%)",
-                    },
-                  }}
-                  onClick={() => closeSidebar()}
-                />
-
-                <Box
-                  sx={{
-                    minHeight: 0,
-                    overflow: "hidden auto",
-                    flexGrow: 1,
-                    display: "flex",
-                    flexDirection: "column",
-                    [`& .${listItemButtonClasses.root}`]: {
-                      gap: 1.5,
-                    },
-                  }}
+            <List
+              size="sm"
+              sx={{
+                gap: 1.2,
+                "--List-nestedInsetStart": "30px",
+                "--ListItem-radius": (theme) => theme.vars.radius.sm,
+              }}
+            >
+              <ListItem>
+                <ListItemButton
+                  selected={isActive("/dashboard")}
+                  onClick={() => router.push("/dashboard")}
                 >
-                  <List
-                    size="sm"
-                    sx={{
-                      gap: 1.2,
-                      "--List-nestedInsetStart": "30px",
-                      "--ListItem-radius": (theme) => theme.vars.radius.sm,
-                    }}
-                  >
+                  <HomeOutlined />
+                  <ListItemContent>Incio</ListItemContent>
+                </ListItemButton>
+              </ListItem>
+              <ListItem nested>
+                <Toggler
+                  renderToggle={({ open, setOpen }) => (
+                    <ListItemButton onClick={() => setOpen(!open)}>
+                      <BarChartOutlined />
+
+                      <ListItemContent>Reportes</ListItemContent>
+                      <KeyboardArrowDownIcon
+                        sx={{
+                          transform: open ? "rotate(180deg)" : "none",
+                        }}
+                      />
+                    </ListItemButton>
+                  )}
+                >
+                  <List sx={{ gap: 0.5 }}>
+                    <ListItem sx={{ mt: 0.5 }}>
+                      <ListItemButton
+                        selected={isActive("/dashboard/inventario/lista")}
+                        onClick={() =>
+                          router.push("/dashboard/inventario/lista")
+                        }
+                        sx={{ fontFamily: "Uber-Medium", fontSize: 16 }}
+                      >
+                        Cortes de caja
+                      </ListItemButton>
+                    </ListItem>
                     <ListItem>
                       <ListItemButton
-                        selected={isActive("/dashboard")}
-                        onClick={() => router.push("/dashboard")}
+                        selected={isActive("/dashboard/inventario/nuevo")}
+                        onClick={() =>
+                          router.push("/dashboard/inventario/nuevo")
+                        }
+                        sx={{
+                          fontFamily: "Uber-Medium",
+                          fontSize: 16,
+                        }}
                       >
-                        <HomeOutlined />
-                        <ListItemContent>Incio</ListItemContent>
+                        Inventario
                       </ListItemButton>
                     </ListItem>
-                    <ListItem nested>
-                      <Toggler
-                        renderToggle={({ open, setOpen }) => (
-                          <ListItemButton onClick={() => setOpen(!open)}>
-                            <BarChartOutlined />
-
-                            <ListItemContent>Reportes</ListItemContent>
-                            <KeyboardArrowDownIcon
-                              sx={{
-                                transform: open ? "rotate(180deg)" : "none",
-                              }}
-                            />
-                          </ListItemButton>
-                        )}
-                      >
-                        <List sx={{ gap: 0.5 }}>
-                          <ListItem sx={{ mt: 0.5 }}>
-                            <ListItemButton
-                              selected={isActive("/dashboard/inventario/lista")}
-                              onClick={() =>
-                                router.push("/dashboard/inventario/lista")
-                              }
-                              sx={{ fontFamily: "Uber-Medium", fontSize: 16 }}
-                            >
-                              Cortes de caja
-                            </ListItemButton>
-                          </ListItem>
-                          <ListItem>
-                            <ListItemButton
-                              selected={isActive("/dashboard/inventario/nuevo")}
-                              onClick={() =>
-                                router.push("/dashboard/inventario/nuevo")
-                              }
-                              sx={{
-                                fontFamily: "Uber-Medium",
-                                fontSize: 16,
-                              }}
-                            >
-                              Inventario
-                            </ListItemButton>
-                          </ListItem>
-                          <ListItem>
-                            <ListItemButton
-                              selected={isActive("/dashboard/inventario/nuevo")}
-                              onClick={() =>
-                                router.push("/dashboard/inventario/nuevo")
-                              }
-                              sx={{ fontFamily: "Uber-Medium", fontSize: 16 }}
-                            >
-                              Ventas
-                            </ListItemButton>
-                          </ListItem>
-                          <ListItem>
-                            <ListItemButton
-                              selected={isActive("/dashboard/inventario/nuevo")}
-                              onClick={() =>
-                                router.push("/dashboard/inventario/nuevo")
-                              }
-                              sx={{ fontFamily: "Uber-Medium", fontSize: 16 }}
-                            >
-                              Empleados
-                            </ListItemButton>
-                          </ListItem>
-                        </List>
-                      </Toggler>
-                    </ListItem>
-
-                    <Divider />
                     <ListItem>
                       <ListItemButton
-                        selected={isActive("/dashboard/inventario")}
-                        onClick={() => router.push("/dashboard/inventario")}
+                        selected={isActive("/dashboard/inventario/nuevo")}
+                        onClick={() =>
+                          router.push("/dashboard/inventario/nuevo")
+                        }
+                        sx={{ fontFamily: "Uber-Medium", fontSize: 16 }}
                       >
-                        <Inventory2Outlined />
-                        <ListItemContent>Inventario</ListItemContent>
+                        Ventas
                       </ListItemButton>
                     </ListItem>
                     <ListItem>
-                      <ListItemButton>
-                        <AttachMoney />
-                        <ListItemContent>Finanzas</ListItemContent>
-                      </ListItemButton>
-                    </ListItem>
-                    <ListItem>
-                      <ListItemButton>
-                        <ThreePOutlined />
-                        <ListItemContent>Empleados</ListItemContent>
-                      </ListItemButton>
-                    </ListItem>
-                    <ListItem>
-                      <ListItemButton>
-                        <PunchClockOutlined />
-                        <ListItemContent>Control de tiempo</ListItemContent>
-                      </ListItemButton>
-                    </ListItem>
-                    <ListItem>
-                      <ListItemButton>
-                        <SupervisedUserCircleOutlined />
-                        <ListItemContent>Clientes</ListItemContent>
-                      </ListItemButton>
-                    </ListItem>
-                    <Divider />
-                    <ListItem>
-                      <ListItemButton>
-                        <PlaylistAddCheckCircleOutlined />
-                        <ListItemContent>Órdenes</ListItemContent>
-                      </ListItemButton>
-                    </ListItem>
-                    <ListItem>
-                      <ListItemButton>
-                        <ListAltOutlined />
-                        <ListItemContent>Ventas</ListItemContent>
-                      </ListItemButton>
-                    </ListItem>
-                    <ListItem>
-                      <ListItemButton>
-                        <StorefrontOutlined />
-                        <ListItemContent>Sucursales</ListItemContent>
+                      <ListItemButton
+                        selected={isActive("/dashboard/inventario/nuevo")}
+                        onClick={() =>
+                          router.push("/dashboard/inventario/nuevo")
+                        }
+                        sx={{ fontFamily: "Uber-Medium", fontSize: 16 }}
+                      >
+                        Empleados
                       </ListItemButton>
                     </ListItem>
                   </List>
+                </Toggler>
+              </ListItem>
 
-                  <List
-                    size="sm"
-                    sx={{
-                      mt: "auto",
-                      flexGrow: 0,
-                      "--ListItem-radius": (theme) => theme.vars.radius.sm,
-                      "--List-gap": "8px",
-                      mb: 2,
-                    }}
-                  >
-                    <ListItem>
-                      <ListItemButton sx={{ fontFamily: "Uber-Medium" }}>
-                        <PointOfSaleOutlined />
-                        Puntos de venta
-                      </ListItemButton>
-                    </ListItem>
-                    <ListItem>
-                      <ListItemButton sx={{ fontFamily: "Uber-Medium" }}>
-                        <SupportRoundedIcon />
-                        Soporte
-                      </ListItemButton>
-                    </ListItem>
-                    <ListItem>
-                      <ListItemButton sx={{ fontFamily: "Uber-Medium" }}>
-                        <SettingsRoundedIcon />
-                        Ajustes
-                      </ListItemButton>
-                    </ListItem>
-                    <ListItem>
-                      <ListItemButton
-                        sx={{ fontFamily: "Uber-Medium", color: "red" }}
-                      >
-                        <ExitToApp />
-                        Cerrar sesión
-                      </ListItemButton>
-                    </ListItem>
-                  </List>
-                </Box>
-              </Sheet>
-              <Box sx={{ flexGrow: 1, p: 0, overflow: "hidden" }}>
-                <Box
-                  sx={{
-                    borderBottom: "1px solid #ebebeb",
-                    paddingLeft: 8,
-                    paddingTop: 8,
-                    paddingBottom: 8,
-                    overflow: "hidden",
-                  }}
+              <Divider />
+              <ListItem>
+                <ListItemButton
+                  selected={isActive("/dashboard/inventario")}
+                  onClick={() => router.push("/dashboard/inventario")}
                 >
-                  <Typography
-                    sx={{
-                      fontSize: 38,
-                      fontFamily: "Uber-Bold",
-                      color: "#000",
-                    }}
-                  >
-                    {pageTitle}
-                  </Typography>
-                </Box>
-                {children}
-              </Box>
-            </Box>
-          </CssVarsProvider>
-        </JoyCssVarsProvider>
-      </MaterialCssVarsProvider>
+                  <Inventory2Outlined />
+                  <ListItemContent>Inventario</ListItemContent>
+                </ListItemButton>
+              </ListItem>
+              <ListItem>
+                <ListItemButton>
+                  <AttachMoney />
+                  <ListItemContent>Finanzas</ListItemContent>
+                </ListItemButton>
+              </ListItem>
+              <ListItem>
+                <ListItemButton>
+                  <ThreePOutlined />
+                  <ListItemContent>Empleados</ListItemContent>
+                </ListItemButton>
+              </ListItem>
+              <ListItem>
+                <ListItemButton>
+                  <PunchClockOutlined />
+                  <ListItemContent>Control de tiempo</ListItemContent>
+                </ListItemButton>
+              </ListItem>
+              <ListItem>
+                <ListItemButton>
+                  <SupervisedUserCircleOutlined />
+                  <ListItemContent>Clientes</ListItemContent>
+                </ListItemButton>
+              </ListItem>
+              <Divider />
+              <ListItem>
+                <ListItemButton>
+                  <PlaylistAddCheckCircleOutlined />
+                  <ListItemContent>Órdenes</ListItemContent>
+                </ListItemButton>
+              </ListItem>
+              <ListItem>
+                <ListItemButton>
+                  <ListAltOutlined />
+                  <ListItemContent>Ventas</ListItemContent>
+                </ListItemButton>
+              </ListItem>
+              <ListItem>
+                <ListItemButton>
+                  <StorefrontOutlined />
+                  <ListItemContent>Sucursales</ListItemContent>
+                </ListItemButton>
+              </ListItem>
+            </List>
+
+            <List
+              size="sm"
+              sx={{
+                mt: "auto",
+                flexGrow: 0,
+                "--ListItem-radius": (theme) => theme.vars.radius.sm,
+                "--List-gap": "8px",
+                mb: 2,
+              }}
+            >
+              <ListItem>
+                <ListItemButton sx={{ fontFamily: "Uber-Medium" }}>
+                  <PointOfSaleOutlined />
+                  Puntos de venta
+                </ListItemButton>
+              </ListItem>
+              <ListItem>
+                <ListItemButton sx={{ fontFamily: "Uber-Medium" }}>
+                  <SupportRoundedIcon />
+                  Soporte
+                </ListItemButton>
+              </ListItem>
+              <ListItem>
+                <ListItemButton sx={{ fontFamily: "Uber-Medium" }}>
+                  <SettingsRoundedIcon />
+                  Ajustes
+                </ListItemButton>
+              </ListItem>
+              <ListItem>
+                <ListItemButton
+                  sx={{ fontFamily: "Uber-Medium", color: "red" }}
+                >
+                  <ExitToApp />
+                  Cerrar sesión
+                </ListItemButton>
+              </ListItem>
+            </List>
+          </Box>
+        </Sheet>
+        <Box sx={{ flexGrow: 1, p: 0, overflow: "hidden" }}>
+          <Box
+            sx={{
+              borderBottom: "1px solid #ebebeb",
+              paddingLeft: 8,
+              paddingTop: 8,
+              paddingBottom: 8,
+              overflow: "hidden",
+            }}
+          >
+            <Typography
+              sx={{
+                fontSize: 38,
+                fontFamily: "Uber-Bold",
+                color: "#000",
+              }}
+            >
+              {pageTitle}
+            </Typography>
+          </Box>
+          {children}
+        </Box>
+      </Box>
     </>
   );
 }
