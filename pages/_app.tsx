@@ -68,7 +68,7 @@ function MyInnerApp({ Component, pageProps }: any) {
       router.push("/");
     }
   }, [session, router, status]);
-  const materialTheme = materialExtendTheme();
+  const materialTheme = materialExtendTheme(theme.material);
   if (!profileLoaded) {
     return (
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
@@ -81,9 +81,8 @@ function MyInnerApp({ Component, pageProps }: any) {
       <Head>
         <meta name="viewport" content="initial-scale=1, width=device-width" />
       </Head>
-      <MaterialCssVarsProvider theme={{ [MATERIAL_THEME_ID]: theme.material }}>
+      <MaterialCssVarsProvider theme={{ [MATERIAL_THEME_ID]: materialTheme }}>
         <JoyCssVarsProvider
-          defaultMode="light"
           disableTransitionOnChange
           theme={theme.joy}
         >
