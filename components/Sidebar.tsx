@@ -59,13 +59,13 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { getUserProfile } from "../context/profile";
-import { closeSidebar } from "../pages/dashboard/inventario/utils";
 import Header from "./Header";
 import routeTitles from "../src/routes";
 import { CssVarsProvider as JoyCssVarsProvider } from "@mui/joy/styles";
 import theme from "../src/theme";
 import { CssVarsProvider, styled } from "@mui/joy/styles";
 import { Drawer } from "@mui/material";
+import { closeSidebar } from "../src/utils";
 const materialTheme = materialExtendTheme();
 
 interface TogglerProps {
