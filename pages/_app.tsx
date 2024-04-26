@@ -43,6 +43,7 @@ function MyInnerApp({ Component, pageProps }: any) {
         console.log(session);
         try {
           const response = await getProfile(logged?.user?.accessToken);
+          console.log(response);
           if (response.error == true) {
             setProfileLoaded(true); 
             setUserProfile(null);
