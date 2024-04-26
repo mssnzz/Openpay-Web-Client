@@ -46,6 +46,8 @@ function MyInnerApp({ Component, pageProps }: any) {
           if (response.error == true) {
             setUserProfile(null);
             signOut({ callbackUrl: "/" });
+            setProfileLoaded(true); // Configura el estado a true una vez el perfil esté cargado
+
           } else {
             setUserProfile(response.data);
             setProfileLoaded(true); // Configura el estado a true una vez el perfil esté cargado
