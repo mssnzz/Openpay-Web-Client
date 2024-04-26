@@ -44,14 +44,13 @@ function MyInnerApp({ Component, pageProps }: any) {
         try {
           const response = await getProfile(logged?.user?.accessToken);
           if (response.error == true) {
+            setProfileLoaded(true); 
             setUserProfile(null);
             signOut({ callbackUrl: "/" });
-            setProfileLoaded(true); // Configura el estado a true una vez el perfil esté cargado
 
           } else {
             setUserProfile(response.data);
-            setProfileLoaded(true); // Configura el estado a true una vez el perfil esté cargado
-
+            setProfileLoaded(true); 
           }
         } catch (error) {
           console.error("Error fetching user profile:", error);
