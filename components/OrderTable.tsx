@@ -3,17 +3,14 @@ import * as React from "react";
 import { ColorPaletteProp } from "@mui/joy/styles";
 import Avatar from "@mui/joy/Avatar";
 import Box from "@mui/joy/Box";
-import Button from "@mui/joy/Button";
 import Chip from "@mui/joy/Chip";
 import Divider from "@mui/joy/Divider";
-import FormControl from "@mui/joy/FormControl";
 import FormLabel from "@mui/joy/FormLabel";
 import Link from "@mui/joy/Link";
 import Input from "@mui/joy/Input";
 import Modal from "@mui/joy/Modal";
 import ModalDialog from "@mui/joy/ModalDialog";
 import ModalClose from "@mui/joy/ModalClose";
-import Select from "@mui/joy/Select";
 import Option from "@mui/joy/Option";
 import Table from "@mui/joy/Table";
 import Sheet from "@mui/joy/Sheet";
@@ -22,202 +19,16 @@ import IconButton, { iconButtonClasses } from "@mui/joy/IconButton";
 import Typography from "@mui/joy/Typography";
 import Menu from "@mui/joy/Menu";
 import MenuButton from "@mui/joy/MenuButton";
-import MenuItem from "@mui/joy/MenuItem";
 import Dropdown from "@mui/joy/Dropdown";
 
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import SearchIcon from "@mui/icons-material/Search";
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import CheckRoundedIcon from "@mui/icons-material/CheckRounded";
-import BlockIcon from "@mui/icons-material/Block";
-import AutorenewRoundedIcon from "@mui/icons-material/AutorenewRounded";
-import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
-import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import MoreHorizRoundedIcon from "@mui/icons-material/MoreHorizRounded";
-import { deleteProduct } from "../../../../services/products";
-
-const rows = [
-  {
-    id: "INV-1234",
-    date: "Feb 3, 2023",
-    status: "Refunded",
-    customer: {
-      initial: "O",
-      name: "Olivia Ryhe",
-      email: "olivia@email.com",
-    },
-  },
-  {
-    id: "INV-1233",
-    date: "Feb 3, 2023",
-    status: "Paid",
-    customer: {
-      initial: "S",
-      name: "Steve Hampton",
-      email: "steve.hamp@email.com",
-    },
-  },
-  {
-    id: "INV-1232",
-    date: "Feb 3, 2023",
-    status: "Refunded",
-    customer: {
-      initial: "C",
-      name: "Ciaran Murray",
-      email: "ciaran.murray@email.com",
-    },
-  },
-  {
-    id: "INV-1231",
-    date: "Feb 3, 2023",
-    status: "Refunded",
-    customer: {
-      initial: "M",
-      name: "Maria Macdonald",
-      email: "maria.mc@email.com",
-    },
-  },
-  {
-    id: "INV-1230",
-    date: "Feb 3, 2023",
-    status: "Cancelled",
-    customer: {
-      initial: "C",
-      name: "Charles Fulton",
-      email: "fulton@email.com",
-    },
-  },
-  {
-    id: "INV-1229",
-    date: "Feb 3, 2023",
-    status: "Cancelled",
-    customer: {
-      initial: "J",
-      name: "Jay Hooper",
-      email: "hooper@email.com",
-    },
-  },
-  {
-    id: "INV-1228",
-    date: "Feb 3, 2023",
-    status: "Refunded",
-    customer: {
-      initial: "K",
-      name: "Krystal Stevens",
-      email: "k.stevens@email.com",
-    },
-  },
-  {
-    id: "INV-1227",
-    date: "Feb 3, 2023",
-    status: "Paid",
-    customer: {
-      initial: "S",
-      name: "Sachin Flynn",
-      email: "s.flyn@email.com",
-    },
-  },
-  {
-    id: "INV-1226",
-    date: "Feb 3, 2023",
-    status: "Cancelled",
-    customer: {
-      initial: "B",
-      name: "Bradley Rosales",
-      email: "brad123@email.com",
-    },
-  },
-  {
-    id: "INV-1225",
-    date: "Feb 3, 2023",
-    status: "Paid",
-    customer: {
-      initial: "O",
-      name: "Olivia Ryhe",
-      email: "olivia@email.com",
-    },
-  },
-  {
-    id: "INV-1224",
-    date: "Feb 3, 2023",
-    status: "Cancelled",
-    customer: {
-      initial: "S",
-      name: "Steve Hampton",
-      email: "steve.hamp@email.com",
-    },
-  },
-  {
-    id: "INV-1223",
-    date: "Feb 3, 2023",
-    status: "Paid",
-    customer: {
-      initial: "C",
-      name: "Ciaran Murray",
-      email: "ciaran.murray@email.com",
-    },
-  },
-  {
-    id: "INV-1221",
-    date: "Feb 3, 2023",
-    status: "Refunded",
-    customer: {
-      initial: "M",
-      name: "Maria Macdonald",
-      email: "maria.mc@email.com",
-    },
-  },
-  {
-    id: "INV-1220",
-    date: "Feb 3, 2023",
-    status: "Paid",
-    customer: {
-      initial: "C",
-      name: "Charles Fulton",
-      email: "fulton@email.com",
-    },
-  },
-  {
-    id: "INV-1219",
-    date: "Feb 3, 2023",
-    status: "Cancelled",
-    customer: {
-      initial: "J",
-      name: "Jay Hooper",
-      email: "hooper@email.com",
-    },
-  },
-  {
-    id: "INV-1218",
-    date: "Feb 3, 2023",
-    status: "Cancelled",
-    customer: {
-      initial: "K",
-      name: "Krystal Stevens",
-      email: "k.stevens@email.com",
-    },
-  },
-  {
-    id: "INV-1217",
-    date: "Feb 3, 2023",
-    status: "Paid",
-    customer: {
-      initial: "S",
-      name: "Sachin Flynn",
-      email: "s.flyn@email.com",
-    },
-  },
-  {
-    id: "INV-1216",
-    date: "Feb 3, 2023",
-    status: "Cancelled",
-    customer: {
-      initial: "B",
-      name: "Bradley Rosales",
-      email: "brad123@email.com",
-    },
-  },
-];
+import { deleteProduct } from "../services/products";
+import { Button, FormControl, InputAdornment, TextField } from "@mui/material";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import InputLabel from "@mui/material/InputLabel";
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
   if (b[orderBy] < a[orderBy]) {
@@ -230,37 +41,6 @@ function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
 }
 
 type Order = "asc" | "desc";
-
-function getComparator<Key extends keyof any>(
-  order: Order,
-  orderBy: Key
-): (
-  a: { [key in Key]: number | string },
-  b: { [key in Key]: number | string }
-) => number {
-  return order === "desc"
-    ? (a, b) => descendingComparator(a, b, orderBy)
-    : (a, b) => -descendingComparator(a, b, orderBy);
-}
-
-// Since 2020 all major browsers ensure sort stability with Array.prototype.sort().
-// stableSort() brings sort stability to non-modern browsers (notably IE11). If you
-// only support modern browsers you can replace stableSort(exampleArray, exampleComparator)
-// with exampleArray.slice().sort(exampleComparator)
-function stableSort<T>(
-  array: readonly T[],
-  comparator: (a: T, b: T) => number
-) {
-  const stabilizedThis = array.map((el, index) => [el, index] as [T, number]);
-  stabilizedThis.sort((a, b) => {
-    const order = comparator(a[0], b[0]);
-    if (order !== 0) {
-      return order;
-    }
-    return a[1] - b[1];
-  });
-  return stabilizedThis.map((el) => el[0]);
-}
 
 function RowMenu() {
   return (
@@ -337,36 +117,20 @@ export default function OrderTable({ products, reloadProducts }: any) {
   const [statusFilter, setStatusFilter] = React.useState("");
   const [categoryFilter, setCategoryFilter] = React.useState("");
 
-  const handleStatusFilterChange = (
-    event: React.SyntheticEvent | null,
-    newValue: any
-  ) => {
-    setStatusFilter(newValue);
-  };
-
-  const handleCategoryFilterChange = (
-    event: React.SyntheticEvent | null,
-    newValue: any
-  ) => {
-    setCategoryFilter(newValue);
-  };
-
   const deleteProducts = async () => {
     const payload = { ids: selected }; // 'selected' should be an array of product IDs
     try {
       const response = await deleteProduct(payload); // Assuming deleteProduct handles the API call
       if (response) {
-        console.log('Products deleted successfully:', response);
+        console.log("Products deleted successfully:", response);
         // Refresh the product list after successful deletion
         reloadProducts(); // Call to reload products
         setSelected([]);
       }
     } catch (error) {
-      console.error('Failed to delete products:', error);
+      console.error("Failed to delete products:", error);
     }
   };
-  
-  
 
   // Filtra los productos por nombre basado en el término de búsqueda.
   // Filtra los productos por nombre y por el estado seleccionado.
@@ -386,39 +150,119 @@ export default function OrderTable({ products, reloadProducts }: any) {
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
   };
+  const handleStatusFilterChange = (event: SelectChangeEvent) => {
+    setStatusFilter(event.target.value as string);
+  };
+  const handleCategoryFilterChange = (event: SelectChangeEvent) => {
+    setCategoryFilter(event.target.value as string);
+  };
   const renderFilters = () => (
     <React.Fragment>
-      <FormControl size="sm">
-        <FormLabel>Estado del producto</FormLabel>
+      <FormControl
+        variant="filled"
+        sx={{
+          width: 200,
+          "& .MuiFilledInput-root": {
+            background: "#fff", // Fondo blanco
+            border: "0px solid #ccc", // Borde completo en todos los lados
+            borderBottom: "0px solid #ccc", // Asegurarse de que no hay borde inferior
+            borderRadius: "40px", // Bordes redondeados ligeramente
+            "&:hover": {
+              borderColor: "#b3b3b3", // Color de borde al pasar el mouse
+            },
+            "&.Mui-focused": {
+              borderColor: "#3f51b5", // Color de borde al enfocar
+            },
+          },
+          "& .MuiInputBase-input": {
+            // Estilos para el texto del input
+            fontFamily: "Uber-Medium", // Aplicar la fuente Uber-Medium
+            fontSize: "1rem", // Puedes ajustar el tamaño de la fuente aquí si es necesario
+            background: "#f5f5f5",
+            borderRadius: "40px", // Bordes redondeados ligeramente
+            paddingLeft: 2.4,
+          },
+          "& .MuiInputLabel-root": {
+            // Apunta al label del TextField
+            fontFamily: "Uber-Medium", // Fuente personalizada para el label
+            paddingLeft: 1,
+          },
+          "& .MuiFilledInput-underline:before, & .MuiFilledInput-underline:after":
+            {
+              display: "none", // Esconder las líneas de underline por completo
+            },
+        }}
+      >
+        <InputLabel id="demo-simple-select-label">Estado</InputLabel>
+
         <Select
-          size="sm"
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
           value={statusFilter}
+          label="Estado"
           onChange={handleStatusFilterChange}
-          placeholder="Filter by status"
-          slotProps={{ button: { sx: { whiteSpace: "nowrap" } } }}
+          variant="filled"
         >
-          <Option value="">Todos</Option>
+          <MenuItem value="">Todos</MenuItem>
           {uniqueStatuses.map((status) => (
-            <Option key={String(status)} value={String(status)}>
+            <MenuItem key={String(status)} value={String(status)}>
               {status === "trash" ? "No publicado" : "Publicado"}
-            </Option>
+            </MenuItem>
           ))}
         </Select>
       </FormControl>
 
-      <FormControl size="sm">
-        <FormLabel>Categorias</FormLabel>
+      <FormControl
+        variant="filled"
+        sx={{
+          width: 200,
+          "& .MuiFilledInput-root": {
+            background: "#fff", // Fondo blanco
+            border: "0px solid #ccc", // Borde completo en todos los lados
+            borderBottom: "0px solid #ccc", // Asegurarse de que no hay borde inferior
+            borderRadius: "40px", // Bordes redondeados ligeramente
+            "&:hover": {
+              borderColor: "#b3b3b3", // Color de borde al pasar el mouse
+            },
+            "&.Mui-focused": {
+              borderColor: "#3f51b5", // Color de borde al enfocar
+            },
+          },
+          "& .MuiInputBase-input": {
+            // Estilos para el texto del input
+            fontFamily: "Uber-Medium", // Aplicar la fuente Uber-Medium
+            fontSize: "1rem", // Puedes ajustar el tamaño de la fuente aquí si es necesario
+            background: "#f5f5f5",
+            borderRadius: "40px", // Bordes redondeados ligeramente
+            paddingLeft: 2.4,
+          },
+          "& .MuiInputLabel-root": {
+            // Apunta al label del TextField
+            fontFamily: "Uber-Medium", // Fuente personalizada para el label
+            paddingLeft: 1,
+          },
+          "& .MuiFilledInput-underline:before, & .MuiFilledInput-underline:after":
+            {
+              display: "none", // Esconder las líneas de underline por completo
+            },
+        }}
+      >
+        <InputLabel id="demo-simple-select-labels">Categorías</InputLabel>
+
         <Select
-          size="sm"
-          placeholder="All"
+          labelId="demo-simple-select-labels"
+          label="Categorías"
           value={categoryFilter}
           onChange={handleCategoryFilterChange}
+          variant="filled"
         >
-          <Option value="">Todas</Option>
+          <MenuItem value="" selected>
+            Todas
+          </MenuItem>
           {uniqueCategories.map((categories: any) => (
-            <Option key={String(categories)} value={String(categories)}>
+            <MenuItem key={String(categories)} value={String(categories)}>
               {categories}
-            </Option>
+            </MenuItem>
           ))}
         </Select>
       </FormControl>
@@ -430,7 +274,6 @@ export default function OrderTable({ products, reloadProducts }: any) {
     page * rowsPerPage,
     page * rowsPerPage + rowsPerPage
   );
-  console.log(currentRows);
   return (
     <React.Fragment>
       <Sheet
@@ -484,15 +327,44 @@ export default function OrderTable({ products, reloadProducts }: any) {
           },
         }}
       >
-        <FormControl sx={{ flex: 1 }} size="sm">
-          <FormLabel>Búsqueda por nombre</FormLabel>
-          <Input
-            size="sm"
-            placeholder="Buscar..."
-            startDecorator={<SearchIcon />}
-            sx={{ flexGrow: 1 }}
+        <FormControl sx={{ flex: 1 }}>
+          <TextField
+            id="filled-basic"
+            label="Búsqueda de productos"
+            variant="filled"
             value={searchTerm}
             onChange={handleSearchChange}
+            sx={{
+              "& .MuiFilledInput-root": {
+                background: "#fff", // Fondo blanco
+                border: "0px solid #ccc", // Borde completo en todos los lados
+                borderBottom: "0px solid #ccc", // Asegurarse de que no hay borde inferior
+                borderRadius: "40px", // Bordes redondeados ligeramente
+                "&:hover": {
+                  borderColor: "#b3b3b3", // Color de borde al pasar el mouse
+                },
+                "&.Mui-focused": {
+                  borderColor: "#3f51b5", // Color de borde al enfocar
+                },
+              },
+              "& .MuiInputBase-input": {
+                // Estilos para el texto del input
+                fontFamily: "Uber-Medium", // Aplicar la fuente Uber-Medium
+                fontSize: "1rem", // Puedes ajustar el tamaño de la fuente aquí si es necesario
+                background: "#f5f5f5",
+                borderRadius: "40px", // Bordes redondeados ligeramente
+                paddingLeft: 2.4,
+              },
+              "& .MuiInputLabel-root": {
+                // Apunta al label del TextField
+                fontFamily: "Uber-Medium", // Fuente personalizada para el label
+                paddingLeft: 1,
+              },
+              "& .MuiFilledInput-underline:before, & .MuiFilledInput-underline:after":
+                {
+                  display: "none", // Esconder las líneas de underline por completo
+                },
+            }}
           />
         </FormControl>
         {renderFilters()}
@@ -551,25 +423,10 @@ export default function OrderTable({ products, reloadProducts }: any) {
                   padding: "12px 6px",
                   fontFamily: "Uber-Medium",
                   fontWeight: 500,
+                  fontSize: 18,
                 }}
               >
-                <Link
-                  underline="none"
-                  color="primary"
-                  component="button"
-                  onClick={() => setOrder(order === "asc" ? "desc" : "asc")}
-                  fontWeight="lg"
-                  endDecorator={<ArrowDropDownIcon />}
-                  sx={{
-                    "& svg": {
-                      transition: "0.2s",
-                      transform:
-                        order === "desc" ? "rotate(0deg)" : "rotate(180deg)",
-                    },
-                  }}
-                >
-                  Código
-                </Link>
+                Código
               </th>
               <th
                 style={{
@@ -577,6 +434,7 @@ export default function OrderTable({ products, reloadProducts }: any) {
                   padding: "12px 6px",
                   fontFamily: "Uber-Medium",
                   fontWeight: 500,
+                  fontSize: 18,
                 }}
               >
                 Nombre
@@ -587,16 +445,18 @@ export default function OrderTable({ products, reloadProducts }: any) {
                   padding: "12px 6px",
                   fontFamily: "Uber-Medium",
                   fontWeight: 500,
+                  fontSize: 18,
                 }}
               >
                 Descripción
               </th>
               <th
                 style={{
-                  width: 140,
+                  width: 180,
                   padding: "12px 6px",
                   fontFamily: "Uber-Medium",
                   fontWeight: 500,
+                  fontSize: 18,
                 }}
               >
                 Estado
@@ -608,6 +468,7 @@ export default function OrderTable({ products, reloadProducts }: any) {
                   padding: "12px 6px",
                   fontFamily: "Uber-Medium",
                   fontWeight: 500,
+                  fontSize: 18,
                 }}
               >
                 Stock
@@ -618,6 +479,7 @@ export default function OrderTable({ products, reloadProducts }: any) {
                   padding: "12px 6px",
                   fontFamily: "Uber-Medium",
                   fontWeight: 500,
+                  fontSize: 18,
                 }}
               >
                 Variaciones
@@ -628,6 +490,7 @@ export default function OrderTable({ products, reloadProducts }: any) {
                   padding: "12px 6px",
                   fontFamily: "Uber-Medium",
                   fontWeight: 500,
+                  fontSize: 18,
                 }}
               >
                 Categoría del producto
@@ -639,6 +502,7 @@ export default function OrderTable({ products, reloadProducts }: any) {
                   padding: "12px 6px",
                   fontFamily: "Uber-Medium",
                   fontWeight: 500,
+                  fontSize: 18,
                 }}
               >
                 {" "}
@@ -647,7 +511,7 @@ export default function OrderTable({ products, reloadProducts }: any) {
           </thead>
           <tbody>
             {currentRows.map((row: any, index: any) => (
-              <tr key={index}>
+              <tr key={index} style={{ height: 60 }}>
                 <td
                   style={{
                     textAlign: "center",
@@ -667,7 +531,7 @@ export default function OrderTable({ products, reloadProducts }: any) {
                     sx={{
                       fontFamily: "Uber-Regular",
                       fontWeight: 400,
-                      fontSize: 14,
+                      fontSize: 18,
                     }}
                   >
                     {row.barcode || "No disponible"}
@@ -684,7 +548,7 @@ export default function OrderTable({ products, reloadProducts }: any) {
                         sx={{
                           fontFamily: "Uber-Regular",
                           fontWeight: 400,
-                          fontSize: 14,
+                          fontSize: 18,
                         }}
                       >
                         {row.name}
@@ -698,7 +562,7 @@ export default function OrderTable({ products, reloadProducts }: any) {
                     sx={{
                       fontFamily: "Uber-Regular",
                       fontWeight: 400,
-                      fontSize: 14,
+                      fontSize: 18,
                     }}
                   >
                     {row.description || "No disponible"}
@@ -708,14 +572,22 @@ export default function OrderTable({ products, reloadProducts }: any) {
                   {row.status === "trash" ? (
                     <Chip
                       color="danger"
-                      sx={{ fontFamily: "Uber-Regular", fontWeight: 400 }}
+                      sx={{
+                        fontFamily: "Uber-Medium",
+                        fontWeight: 400,
+                        fontSize: 18,
+                      }}
                     >
                       No publicado
                     </Chip>
                   ) : (
                     <Chip
                       color="success"
-                      sx={{ fontFamily: "Uber-Regular", fontWeight: 400 }}
+                      sx={{
+                        fontFamily: "Uber-Medium",
+                        fontWeight: 400,
+                        fontSize: 18,
+                      }}
                     >
                       Publicado
                     </Chip>
@@ -728,7 +600,7 @@ export default function OrderTable({ products, reloadProducts }: any) {
                     sx={{
                       fontFamily: "Uber-Regular",
                       fontWeight: 400,
-                      fontSize: 14,
+                      fontSize: 18,
                     }}
                   >
                     {row.variations.reduce(
@@ -747,6 +619,7 @@ export default function OrderTable({ products, reloadProducts }: any) {
                             mr: 0.5,
                             fontFamily: "Uber-Regular",
                             fontWeight: 500,
+                            fontSize: 18,
                           }}
                         >
                           {variation.name}
@@ -772,8 +645,9 @@ export default function OrderTable({ products, reloadProducts }: any) {
                     <Chip
                       sx={{
                         mr: 0.5,
-                        fontFamily: "Uber-Regular",
+                        fontFamily: "Uber-Medium",
                         fontWeight: 500,
+                        fontSize: 18,
                       }}
                       key={index}
                     >
@@ -783,7 +657,6 @@ export default function OrderTable({ products, reloadProducts }: any) {
                 </td>
                 <td>
                   <Box sx={{ display: "flex", gap: 2, alignItems: "center" }}>
-                   
                     <RowMenu />
                   </Box>
                 </td>
@@ -791,20 +664,46 @@ export default function OrderTable({ products, reloadProducts }: any) {
             ))}
           </tbody>
         </Table>
-      
       </Sheet>
-      <Box display="flex" justifyContent="space-between">
-        <Button onClick={() => setPage(page - 1)} disabled={page === 0}>
+      <Box display="flex" justifyContent="flex-end" sx={{ marginTop: 1 }}>
+        {selected.length > 0 && (
+          <Button
+            onClick={deleteProducts}
+            variant="outlined"
+            sx={{
+              fontFamily: "Uber-Medium",
+              textTransform: "none",
+              fontSize: 18,
+            }}
+          >
+            Eliminar Productos
+          </Button>
+        )}
+
+        <Button
+          variant="outlined"
+          onClick={() => setPage(Math.max(0, page - 1))}
+          disabled={page === 0}
+          sx={{
+            fontFamily: "Uber-Medium",
+            textTransform: "none",
+            fontSize: 18,
+            margin: "0 8px",
+          }}
+        >
           Anterior
         </Button>
-        {selected.length > 0 && (
-          <Button onClick={deleteProducts} color="danger">Eliminar Productos</Button>
-        )}
         <Button
+          variant="outlined"
           onClick={() => setPage(page + 1)}
           disabled={
             page >= Math.ceil(filteredProducts.length / rowsPerPage) - 1
           }
+          sx={{
+            fontFamily: "Uber-Medium",
+            textTransform: "none",
+            fontSize: 18,
+          }}
         >
           Siguiente
         </Button>

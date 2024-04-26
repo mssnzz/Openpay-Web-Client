@@ -6,12 +6,24 @@
   
   @font-face {
     font-family: "Uber-Bold";
-    src: url("./public/fonts/square/SquareSansDisplay-VF.woff2") format("woff2");
+    src: url("./public/fonts/dd/TTNorms-Bold.woff2") format("woff2");
+    letter-spacing: normal!important;
+
   }
   
   @font-face {
     font-family: "Uber-Medium";
-    src: url("./public/fonts/square/SquareSansText-Medium.woff2") format("woff2");
+    src: url("./public/fonts/dd/TTNorms-Medium.woff2") format("woff2");
+    font-weight: 500;
+    letter-spacing: -0.5!important;
+  }
+  @font-face {
+    font-family: "Uber-Mono-Medium";
+    src: url("./public/fonts/UberMoveMono-Medium.woff2") format("woff2");
+  }
+  @font-face {
+    font-family: "Uber-Mono-Regular";
+    src: url("./public/fonts/UberMoveMono-Regular.woff2") format("woff2");
   }
   * {
     -webkit-user-select: none; /* Chrome, Safari, Opera */
@@ -19,3 +31,28 @@
     -ms-user-select: none; /* Internet Explorer/Edge */
     user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera, and Firefox */
   }
+  /* Asegúrate de que el z-index de la fila sea menor que el del desplegable */
+.table-row {
+    z-index: 1;
+  }
+  
+  /* Para elementos desplegables, usa un z-index más alto */
+  .dropdown-content {
+    z-index: 2;
+    position: relative; /* O absolute, según sea necesario */
+  }
+  
+  /* Media query para pantallas pequeñas */
+  @media (max-width: 768px) {
+    .dropdown-content {
+      /* Posiciona el desplegable para que no se superponga */
+      position: absolute;
+      right: 0; /* O ajusta según sea necesario */
+    }
+  
+    .table-cell {
+      /* Asegúrate de que no haya desbordamiento no deseado */
+      overflow: visible;
+    }
+  }
+  
