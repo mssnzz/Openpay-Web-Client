@@ -174,7 +174,7 @@ export default function Home() {
   };
 
   return (
-    <CssVarsProvider defaultMode="dark" disableTransitionOnChange>
+    <CssVarsProvider defaultMode="light" disableTransitionOnChange>
       <CssBaseline />
       <GlobalStyles
         styles={{
