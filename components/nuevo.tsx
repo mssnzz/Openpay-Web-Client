@@ -160,6 +160,15 @@ export default function NewProduct({ setOpen, reloadProducts }: any) {
           <Box sx={{ display: "flex", gap: 2, overflowX: "hidden" }}>
             <Box sx={{ flex: 1 }}>
               <Stack spacing={1}>
+              <FormControl>
+                  <TextField
+                    id="filled-basic"
+                    label="Código de barra"
+                    variant="filled"
+                    name="barcode"
+                   
+                  />
+                </FormControl>
                 <FormControl>
                   <TextField
                     id="filled-basic"
@@ -311,15 +320,7 @@ export default function NewProduct({ setOpen, reloadProducts }: any) {
                     
                   />
                 </FormControl>
-                <FormControl>
-                  <TextField
-                    id="filled-basic"
-                    label="Código de barra"
-                    variant="filled"
-                    name="barcode"
-                   
-                  />
-                </FormControl>
+               
                 {userData?.user.brands.category == "Retail" ? (
                   <Box>
                     <Divider
@@ -540,7 +541,7 @@ export default function NewProduct({ setOpen, reloadProducts }: any) {
                       <FormControl>
                         <TextField
                           id="filled-basic"
-                          label="Precio de compra"
+                          label="Costo del producto"
                           variant="filled"
                           name="precioCompra"
                           sx={{

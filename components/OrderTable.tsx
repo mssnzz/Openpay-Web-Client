@@ -493,6 +493,7 @@ export default function OrderTable({ products, reloadProducts }: any) {
                 </>
               ) : (
                 <>
+                
                   <th
                     style={{
                       width: 200,
@@ -502,7 +503,7 @@ export default function OrderTable({ products, reloadProducts }: any) {
                       fontSize: 18,
                     }}
                   >
-                    Precio de venta
+                    Costo del producto
                   </th>
                   <th
                     style={{
@@ -513,7 +514,7 @@ export default function OrderTable({ products, reloadProducts }: any) {
                       fontSize: 18,
                     }}
                   >
-                    Precio de compra
+                    Precio de venta
                   </th>
                   <th
                     style={{
@@ -700,6 +701,7 @@ export default function OrderTable({ products, reloadProducts }: any) {
                   </>
                 ) : (
                   <>
+                   
                     <td>
                       <Typography
                         level="body-xs"
@@ -709,7 +711,7 @@ export default function OrderTable({ products, reloadProducts }: any) {
                           fontSize: 18,
                         }}
                       >
-                        {row.precioVenta || "No disponible"}
+                        {row.precioCompra || "No disponible"}
                       </Typography>
                     </td>
                     <td>
@@ -721,7 +723,7 @@ export default function OrderTable({ products, reloadProducts }: any) {
                           fontSize: 18,
                         }}
                       >
-                        {row.precioCompra || "No disponible"}
+                        {row.precioVenta || "No disponible"}
                       </Typography>
                     </td>
                     <td>
