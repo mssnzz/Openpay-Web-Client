@@ -105,6 +105,7 @@ export default function NewProduct({ setOpen, reloadProducts }: any) {
       precioCompra: formData.get("precioCompra") || "",
       precioVenta: formData.get("precioVenta") || "",
       stockAvailable: formData.get("stockAvailable") || "",
+      minimumStock: formData.get("minimumStock") || "",
 
       categoryIds: selectedCategories, // Assuming selectedCategories is an array of category IDs
       storeIds: selectedStores, // Assuming selectedStores is an array of store IDs
