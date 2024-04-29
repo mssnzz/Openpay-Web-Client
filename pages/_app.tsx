@@ -16,6 +16,7 @@ import { useRouter } from "next/router";
 import { getProfile } from "../services/users";
 import { setUserProfile } from "../context/profile";
 import { CircularProgress } from "@mui/material";
+import Header from "../components/Header";
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -91,6 +92,7 @@ function MyInnerApp({ Component, pageProps }: any) {
           theme={theme.joy}
         >
           <CssBaseline enableColorScheme />
+          <Header/>
           <Component {...pageProps} />
         </JoyCssVarsProvider>
       </MaterialCssVarsProvider>
